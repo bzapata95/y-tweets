@@ -1,4 +1,11 @@
-<?php include_once("config.php") ?>
+<?php
+include_once("config.php");
+include_once("classes/Usuario.php");
+
+$usuarioLogeado = Usuario::estaLogeado() ? $_SESSION["usuarioLogeado"] : "";
+$usuarioData = new Usuario($con, $usuarioLogeado);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 

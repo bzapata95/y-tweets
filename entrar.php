@@ -12,6 +12,7 @@ if (isset($_POST["login"])) {
     $listo = $newCuenta->login($usuario, $password);
 
     if ($listo) {
+        $_SESSION["usuarioLogeado"] = $usuario;
         header("Location: index.php");
     } else {
         echo "CREDENCIALES INCORRECTOS";
