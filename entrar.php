@@ -1,5 +1,22 @@
 <?php
 include_once("includes/header.php");
+include_once("includes/classes/Cuenta.php");
+
+
+$newCuenta = new Cuenta($con);
+
+if (isset($_POST["login"])) {
+    $usuario = $_POST["usuario"];
+    $password = $_POST["password"];
+
+    $listo = $newCuenta->login($usuario, $password);
+
+    if ($listo) {
+        header("Location: index.php");
+    } else {
+        echo "CREDENCIALES INCORRECTOS";
+    }
+}
 ?>
 
 <div class="wrapper fadeInDown d-flex justify-content-center align-items-center">
@@ -13,10 +30,10 @@ include_once("includes/header.php");
         </div>
 
         <!-- Login Form -->
-        <form>
+        <form action="entrar.php" method="POST">
             <input type="text" id="login" class="fadeIn second" name="usuario" placeholder="Usuario">
-            <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
-            <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+            <input type="submit" class="fadeIn fourth" name="login" value="Iniciar sesión">
         </form>
 
     </div>

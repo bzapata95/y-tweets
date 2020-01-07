@@ -8,6 +8,26 @@ class Cuenta
         $this->con = $con;
     }
 
+    public function login($usuario, $password)
+    {
+        $query = $this->con->prepare("SELECT * FROM usuarios WHERE usuario = :user");
+        $query->bindParam(":user", $usuario);
+        $query->execute();
+
+        if ($query->rowCount() == 1) {
+            $row = $query->fetch(PDO::FETCH_ASSOC);
+            $passwordHashed = $row["password"];
+
+            if (password_verify($password, $passwordHashed)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public function registrar($nombre, $usuario, $password)
     {
         $success = $this->insertarDB($nombre, $usuario, $password);
